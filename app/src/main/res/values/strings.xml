@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CyprJakDojade</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">JakDojadeCypr</string>
+    <string name="nav_header_subtitle">Połączenia międzymiastowe na Cyprze</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Ustawienia</string>
+
+    <string name="menu_home">Cypr - połączenia</string>
+    <string name="menu_gallery">Cypr - rozkłady</string>
+    <string name="menu_slideshow">Cypr - zaloguj</string>
+    <string name="menu_szukajPolaczenia">Znajdź połączenie</string>
+    <string name="menu_trasa">Trasa</string>
+    <string name="menu_zaloguj">Zaloguj się</string>
+</resources>

@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.193" />
 
     <EditText
-        android:id="@+id/LabelForWyszukaj"
+        android:id="@+id/EditTextSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="62dp"
@@ -44,6 +44,6 @@
         android:text="@string/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LabelForWyszukaj" />
+        app:layout_constraintTop_toBottomOf="@+id/EditTextSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

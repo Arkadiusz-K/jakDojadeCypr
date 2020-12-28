@@ -1,0 +1,10 @@
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD@{1}
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{1}: reset: moving to 018988d
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{2}: reset: moving to HEAD@{7}
+[33md43886a[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{3}: pull: Fast-forward
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{4}: reset: moving to HEAD@{5}
+[33md43886a[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{5}: pull: Fast-forward
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{6}: reset: moving to HEAD@{1}
+[33md43886a[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{7}: commit: 28.12:16:50
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{8}: Branch: renamed refs/heads/master to refs/heads/main
+[33m018988d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{10}: commit (initial): first

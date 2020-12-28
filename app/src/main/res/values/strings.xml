@@ -13,7 +13,8 @@
     <string name="menu_szukajPolaczenia">Znajdź połączenie</string>
     <string name="menu_trasa">Trasa</string>
     <string name="menu_zaloguj">Zaloguj się</string>
-    <string name="Button1">Button</string>
+    <string name="button">Wyszukaj</string>
+    <string name="name">Wpisz trasę</string>
     <string name="wyszukaj">wyszukaj</string>
-    <string name="wyszukaj_tras">wyszukaj trasę</string>
+    <string name="wyszukaj_tras">wyszukaj_tras</string>
 </resources>

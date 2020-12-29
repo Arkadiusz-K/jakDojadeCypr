@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -47,15 +51,18 @@ public class HomeFragment extends Fragment {
             }
         });
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("name");
-        //reference = FirebaseDatabase.getInstance().getReference("users").child(id);
-        // tu wklejam
+        DatabaseReference ref = database.getReference("nicosia").child("Dionysios Solomos Square").child("paphos").child("ponToPia");
+
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                name = dataSnapshot.getValue(String.class);
-                Log.d(TAG, name);
-                System.out.println("IMIE: "+name);
+                int i=1;
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String godzOdjazdu = (String)ds.getValue();
+                    System.out.println("nr: "+i+" ,godzina odj: "+godzOdjazdu);
+                    i++;
+                }
+
             }
 
             @Override
@@ -76,7 +83,6 @@ public class HomeFragment extends Fragment {
                 System.out.println("poczatkowy: "+przystanekPoczatkowy);
                 String przystanekKoncowy = tv2.getText().toString();
                 System.out.println("koncowy: "+przystanekKoncowy);
-                System.out.println("CZY DZIALA IMIE?: "+name);
             }
         });
         return root;

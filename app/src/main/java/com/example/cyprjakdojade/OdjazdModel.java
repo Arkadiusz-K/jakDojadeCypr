@@ -1,5 +1,13 @@
 package com.example.cyprjakdojade;
 
-public class TrasaModel {
-    private String 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class OdjazdModel {
+    public String odjazdId;
+    public String przystanekPoczatkowy;
+    public String przystanekKoncowy;
+    public String godzinaOdjazdu;
 }

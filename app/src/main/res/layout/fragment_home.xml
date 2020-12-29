@@ -26,24 +26,64 @@
         android:id="@+id/EditTextSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="68dp"
+        android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.772"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home"
-        tools:ignore="LabelFor"
-        android:autofillHints="" />
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="128dp"
         android:text="@string/button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTextSearch" />
+
+    <EditText
+        android:id="@+id/EditTextSearch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="43dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/name2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextSearch" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/from"
+        app:layout_constraintBottom_toBottomOf="@+id/EditTextSearch"
+        app:layout_constraintEnd_toStartOf="@+id/EditTextSearch" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="62dp"
+        android:text="@string/to"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSearch"
+        app:layout_constraintEnd_toStartOf="@+id/EditTextSearch2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

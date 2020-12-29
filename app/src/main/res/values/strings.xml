@@ -14,7 +14,10 @@
     <string name="menu_trasa">Trasa</string>
     <string name="menu_zaloguj">Zaloguj się</string>
     <string name="button">Wyszukaj</string>
-    <string name="name">Wpisz trasę</string>
+    <string name="name">Przystanek początkowy</string>
     <string name="wyszukaj">wyszukaj</string>
     <string name="wyszukaj_tras">wyszukaj_tras</string>
+    <string name="from">From</string>
+    <string name="name2">Przystanek końcowy</string>
+    <string name="to">To</string>
 </resources>

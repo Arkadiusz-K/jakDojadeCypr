@@ -1,12 +1,9 @@
 package com.example.cyprjakdojade.ui.home;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,13 +19,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 
 public class HomeFragment extends Fragment {
 
@@ -36,8 +31,10 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     EditText tv;
     EditText tv2;
-    String name;
-    ArrayList<String> timetable = new ArrayList<String>();
+    EditText time;
+    ArrayList<Integer> timetable = new ArrayList<Integer>();
+    int check = 0;
+    int godzinaInt, czasOdjazdu;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +52,7 @@ public class HomeFragment extends Fragment {
 
         tv = root.findViewById(R.id.EditTextSearch);
         tv2 = root.findViewById(R.id.EditTextSearch2);
+        time = root.findViewById(R.id.editTextTime);
         Button button = (Button)root.findViewById(R.id.buttonSearch);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -62,17 +60,35 @@ public class HomeFragment extends Fragment {
                 System.out.println("----------------NAPIS NAPIS-----------------");
                 String przystanekPoczatkowy = tv.getText().toString();
                 String przystanekKoncowy = tv2.getText().toString();
+                String czas = time.getText().toString();
+                String[] podzielonyCzas = czas.split(":");
+                czas = podzielonyCzas[0]+podzielonyCzas[1];
+                try{
+                    czasOdjazdu = Integer.parseInt(czas);
+                } catch (NumberFormatException e){
+                    System.out.println("NumberFormatException"+e.getMessage());
+                }
+
+                // tutaj bedzie szukanie najblizszego polaczenia i kolejnych po nim
                 DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int i=1;
+                        int godzinaInt=0;
                         for(DataSnapshot ds : dataSnapshot.getChildren()){
                             String godzOdjazdu = (String)ds.getValue();
-
-                            timetable.add(godzOdjazdu);
+                            String[] podzielonaGodzina = godzOdjazdu.split(":");
+                            String godzina = podzielonaGodzina[0]+podzielonaGodzina[1];
+                            try {
+                                godzinaInt = Integer.parseInt(godzina);
+                            } catch (NumberFormatException e){
+                                System.out.println("NumberFormatException"+e.getMessage());
+                            }
+                            timetable.add(godzinaInt);
                             i++;
                         }
+                        check=1;
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -80,12 +96,26 @@ public class HomeFragment extends Fragment {
                     }
                 };
                 ref.addListenerForSingleValueEvent(valueEventListener);
-                System.out.println("Przystanek poczatkowy: "+przystanekPoczatkowy);
-                System.out.println("Przystanek koncowy: "+przystanekKoncowy);
-                int i=1;
-                for(String s : timetable){
-                    System.out.println("nr: "+i+" ,godzina odj: "+s);
-                    i++;
+                if(check==0) System.out.println("NIE ZDAZYLO SIE DODAC");
+                else {
+                    int i = 1;
+                    if (timetable.size() == 0)
+                        System.out.println("Pusta lista????????????????????????");
+                    for (int time : timetable) {
+                        System.out.println("nr: " + i + " ,godzina odj: " + time);
+                        i++;
+                    }
+                    i=0;
+                    System.out.println("GODZINA INT: "+czasOdjazdu);
+                    timetable = HomeFunctions.najblizszaGodzina(timetable, czasOdjazdu);
+                    System.out.println("---------------------------------------------------");
+                    for (int time : timetable) {
+                        System.out.println("nr: " + i + " ,po powrocie z funkcji: " + time);
+                        i++;
+                    }
+                    System.out.println("Przystanek poczatkowy: " + przystanekPoczatkowy);
+                    System.out.println("Przystanek koncowy: " + przystanekKoncowy);
+                    System.out.println("Wpisany czas to: " + czas);
                 }
             }
         });

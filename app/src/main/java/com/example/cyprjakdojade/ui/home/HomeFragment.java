@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
     EditText tv;
     EditText tv2;
     String name;
+    ArrayList<String> timetable = new ArrayList<String>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,26 +52,6 @@ public class HomeFragment extends Fragment {
             }
         });
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("nicosia").child("Dionysios Solomos Square").child("paphos").child("ponToPia");
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int i=1;
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    String godzOdjazdu = (String)ds.getValue();
-                    System.out.println("nr: "+i+" ,godzina odj: "+godzOdjazdu);
-                    i++;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("BLAAAAAD");
-            }
-        };
-        ref.addListenerForSingleValueEvent(valueEventListener);
 
         tv = root.findViewById(R.id.EditTextSearch);
         tv2 = root.findViewById(R.id.EditTextSearch2);
@@ -80,9 +61,32 @@ public class HomeFragment extends Fragment {
             public void onClick(View view){
                 System.out.println("----------------NAPIS NAPIS-----------------");
                 String przystanekPoczatkowy = tv.getText().toString();
-                System.out.println("poczatkowy: "+przystanekPoczatkowy);
                 String przystanekKoncowy = tv2.getText().toString();
-                System.out.println("koncowy: "+przystanekKoncowy);
+                DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
+                ValueEventListener valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int i=1;
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            String godzOdjazdu = (String)ds.getValue();
+
+                            timetable.add(godzOdjazdu);
+                            i++;
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("error");
+                    }
+                };
+                ref.addListenerForSingleValueEvent(valueEventListener);
+                System.out.println("Przystanek poczatkowy: "+przystanekPoczatkowy);
+                System.out.println("Przystanek koncowy: "+przystanekKoncowy);
+                int i=1;
+                for(String s : timetable){
+                    System.out.println("nr: "+i+" ,godzina odj: "+s);
+                    i++;
+                }
             }
         });
         return root;

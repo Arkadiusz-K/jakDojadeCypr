@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     EditText tv;
     EditText tv2;
     EditText time;
-    ArrayList<Integer> timetable = new ArrayList<Integer>();
+    ArrayList<Integer> timetable = new ArrayList<>();
     int check = 0;
     int godzinaInt, czasOdjazdu;
 
@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view){
                 System.out.println("----------------NAPIS NAPIS-----------------");
                 String przystanekPoczatkowy = tv.getText().toString();
+                przystanekPoczatkowy = HomeFunctions.walidacja(przystanekPoczatkowy);
                 String przystanekKoncowy = tv2.getText().toString();
                 String czas = time.getText().toString();
                 String[] podzielonyCzas = czas.split(":");
@@ -90,32 +91,36 @@ public class HomeFragment extends Fragment {
                         }
                         check=1;
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         System.out.println("error");
                     }
                 };
-                ref.addListenerForSingleValueEvent(valueEventListener);
-                if(check==0) System.out.println("NIE ZDAZYLO SIE DODAC");
-                else {
-                    int i = 1;
-                    if (timetable.size() == 0)
-                        System.out.println("Pusta lista????????????????????????");
-                    for (int time : timetable) {
-                        System.out.println("nr: " + i + " ,godzina odj: " + time);
-                        i++;
+                if(!przystanekPoczatkowy.equals("error") && !przystanekKoncowy.equals("error") && !czas.equals("error"))
+                {
+                    ref.addListenerForSingleValueEvent(valueEventListener);
+                    if(check==0) System.out.println("NIE ZDAZYLO SIE DODAC");
+                    else {
+                        int i = 1;
+                        if (timetable.size() == 0)
+                            System.out.println("Pusta lista????????????????????????");
+                        for (int time : timetable) {
+                            System.out.println("nr: " + i + " ,godzina odj: " + time);
+                            i++;
+                        }
+                        i = 0;
+                        System.out.println("GODZINA INT: " + czasOdjazdu);
+                        timetable = HomeFunctions.najblizszaGodzina(timetable, czasOdjazdu);
+                        System.out.println("---------------------------------------------------");
+                        for (int time : timetable) {
+                            System.out.println("nr: " + i + " ,po powrocie z funkcji: " + time);
+                            i++;
+                        }
+                        System.out.println("Przystanek poczatkowy: " + przystanekPoczatkowy);
+                        System.out.println("Przystanek koncowy: " + przystanekKoncowy);
+                        System.out.println("Wpisany czas to: " + czas);
                     }
-                    i=0;
-                    System.out.println("GODZINA INT: "+czasOdjazdu);
-                    timetable = HomeFunctions.najblizszaGodzina(timetable, czasOdjazdu);
-                    System.out.println("---------------------------------------------------");
-                    for (int time : timetable) {
-                        System.out.println("nr: " + i + " ,po powrocie z funkcji: " + time);
-                        i++;
-                    }
-                    System.out.println("Przystanek poczatkowy: " + przystanekPoczatkowy);
-                    System.out.println("Przystanek koncowy: " + przystanekKoncowy);
-                    System.out.println("Wpisany czas to: " + czas);
                 }
             }
         });

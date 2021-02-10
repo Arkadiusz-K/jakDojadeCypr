@@ -10,7 +10,7 @@ public class HomeFunctions {
             System.out.println("i wieksze niz list.get(0)");
             return list;
         }
-        ArrayList<Integer> resultList = new ArrayList<Integer>();
+        ArrayList<Integer> resultList = new ArrayList<>();
         int doWpisania = 3;
         for(int j : list){
             if(i<=j && doWpisania>0){
@@ -28,4 +28,13 @@ public class HomeFunctions {
        }
         return resultList;
     }
+
+    public static String walidacja(String przystanek){
+        if(przystanek.equals("")) {
+            System.out.println("NIE PODANO PRZYSTANKU POCZĄTKOWEGO");
+            return "error";
+        }
+        return przystanek.toLowerCase();
+    }
+
 }

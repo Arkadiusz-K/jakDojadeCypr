@@ -20,7 +20,7 @@ public class HomeFunctions {
             }
         }
         int index = 0;
-       if(doWpisania>0){
+        if(doWpisania>0){
            for(int j=doWpisania; j>0; j--){
                resultList.add(list.get(index));
                index++;
@@ -35,6 +35,27 @@ public class HomeFunctions {
             return "error";
         }
         return przystanek.toLowerCase();
+    }
+
+    public static int czasWalidacja(String czas){
+        int czasOdjazdu=999999; // kod bledu
+        if(czas.length() != 5 ) {
+            System.out.println("Podaj czas w formacie: hh:mm !!!");
+        }
+        else {
+            String[] podzielonyCzas = czas.split(":");
+            czas = podzielonyCzas[0] + podzielonyCzas[1];
+            try {
+                czasOdjazdu = Integer.parseInt(czas);
+            } catch (NumberFormatException e) {
+                System.out.println("NumberFormatException" + e.getMessage());
+            }
+        }
+        if(czasOdjazdu>2359 || czasOdjazdu<0 || czasOdjazdu%100>59) {
+            czasOdjazdu=999999;
+            System.out.println("Podaj prawidłowy czas !!!");
+        }
+        return czasOdjazdu;
     }
 
 }

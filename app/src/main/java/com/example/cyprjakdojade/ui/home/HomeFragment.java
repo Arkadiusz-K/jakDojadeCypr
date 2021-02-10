@@ -57,18 +57,17 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                System.out.println("----------------NAPIS NAPIS-----------------");
+                // wczytanie danych
                 String przystanekPoczatkowy = tv.getText().toString();
-                przystanekPoczatkowy = HomeFunctions.walidacja(przystanekPoczatkowy);
                 String przystanekKoncowy = tv2.getText().toString();
                 String czas = time.getText().toString();
-                String[] podzielonyCzas = czas.split(":");
-                czas = podzielonyCzas[0]+podzielonyCzas[1];
-                try{
-                    czasOdjazdu = Integer.parseInt(czas);
-                } catch (NumberFormatException e){
-                    System.out.println("NumberFormatException"+e.getMessage());
-                }
+
+
+                // walidacja danych
+                przystanekPoczatkowy = HomeFunctions.walidacja(przystanekPoczatkowy);
+                przystanekKoncowy = HomeFunctions.walidacja(przystanekKoncowy);
+                czasOdjazdu = HomeFunctions.czasWalidacja(czas);
+
 
                 // tutaj bedzie szukanie najblizszego polaczenia i kolejnych po nim
                 DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
@@ -97,7 +96,7 @@ public class HomeFragment extends Fragment {
                         System.out.println("error");
                     }
                 };
-                if(!przystanekPoczatkowy.equals("error") && !przystanekKoncowy.equals("error") && !czas.equals("error"))
+                if(!przystanekPoczatkowy.equals("error") && !przystanekKoncowy.equals("error") && czasOdjazdu != 999999)
                 {
                     ref.addListenerForSingleValueEvent(valueEventListener);
                     if(check==0) System.out.println("NIE ZDAZYLO SIE DODAC");

@@ -62,28 +62,13 @@ public class HomeFunctions {
         return czasOdjazdu;
     }
 
-    /*static String czyPrzystankiSaWBazie(String p1, String p2){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
-        //DatabaseReference przystanek1ref = database.getReference()
-        database.getReference(p1).equalTo(p1).addValueEventListener(new ValueEventListener() {
-        //ref.child("app").child("user").child("uid").orderByChild("username").equalTo(username).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null && dataSnapshot.getChildren()!=null &&
-                        dataSnapshot.getChildren().iterator().hasNext()){
-                    //Username exists
-                }else {
-                    //Username does not exist
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                //Error
-            }
-        });
-        return p1;
+    static String edytujDoWyswietlenia(int godz){
+        String s = Integer.toString(godz);
+        if(godz>999){
+            s = Integer.toString(godz).substring(0,2)+":"+Integer.toString(godz).substring(2);
+        } else{
+            s = Integer.toString(godz).substring(0,1)+":"+Integer.toString(godz).substring(1);
+        }
+        return s;
     }
-    */
 }

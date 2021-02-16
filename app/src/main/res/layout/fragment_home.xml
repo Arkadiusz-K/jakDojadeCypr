@@ -2,19 +2,43 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dostepnePolaczenia"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="402dp"
-        android:layout_height="368dp"
+        android:layout_width="411dp"
+        android:layout_height="266dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextSearch2" />
+        app:layout_constraintTop_toBottomOf="@+id/EditTextSearch2"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/wyniki"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/wynik1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/wynik2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/wynik3"
+            android:layout_width="match_parent"
+            android:layout_height="58dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_home"

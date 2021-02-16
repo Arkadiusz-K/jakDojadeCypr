@@ -20,4 +20,5 @@
     <string name="from">From</string>
     <string name="name2">Przystanek końcowy</string>
     <string name="to">To</string>
+    <string name="dostepne_polaczenia">Dostępne połączenia</string>
 </resources>

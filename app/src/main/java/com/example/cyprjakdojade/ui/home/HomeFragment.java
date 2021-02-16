@@ -112,21 +112,29 @@ public class HomeFragment extends Fragment {
                         int i = 1;
                         if (timetable.size() == 0)
                             System.out.println("Pusta lista????????????????????????");
-                        for (int time : timetable) {
-                            System.out.println("nr: " + i + " ,godzina odj: " + time);
-                            i++;
-                        }
                         i = 0;
                         System.out.println("GODZINA INT: " + czasOdjazdu);
                         timetable = HomeFunctions.najblizszaGodzina(timetable, czasOdjazdu);
                         System.out.println("---------------------------------------------------");
-                        for (int time : timetable) {
+                        /*for (int time : timetable) {
                             System.out.println("nr: " + i + " ,po powrocie z funkcji: " + time);
                             i++;
+                        }*/
+                        for(int j=0;j<3;j++){
+                            System.out.println("Z tablicy!!!!!!! :" + timetable.get(j));
                         }
-                        System.out.println("Przystanek poczatkowy: " + przystanekPoczatkowy);
-                        System.out.println("Przystanek koncowy: " + przystanekKoncowy);
-                        System.out.println("Wpisany czas to: " + czas);
+                        TextView wyniki = root.findViewById(R.id.wyniki);
+                        wyniki.setText("WYNIKI");
+                        String godz1 = HomeFunctions.edytujDoWyswietlenia(timetable.get(0));
+                        String godz2 = HomeFunctions.edytujDoWyswietlenia(timetable.get(1));
+                        String godz3 = HomeFunctions.edytujDoWyswietlenia(timetable.get(2));
+                        TextView wynik1 = root.findViewById(R.id.wynik1);
+                        wynik1.setText(godz1);
+                        TextView wynik2 = root.findViewById(R.id.wynik2);
+                        wynik2.setText(godz2);
+                        TextView wynik3 = root.findViewById(R.id.wynik3);
+                        wynik3.setText(godz3);
+                        timetable.clear();
                     }
                 }
             }

@@ -71,24 +71,32 @@ public class HomeFragment extends Fragment {
 
                 // tutaj bedzie szukanie najblizszego polaczenia i kolejnych po nim
                 DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
+                final String[] czyIstniejeWBazie = {""};
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int i=1;
-                        int godzinaInt=0;
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            String godzOdjazdu = (String)ds.getValue();
-                            String[] podzielonaGodzina = godzOdjazdu.split(":");
-                            String godzina = podzielonaGodzina[0]+podzielonaGodzina[1];
-                            try {
-                                godzinaInt = Integer.parseInt(godzina);
-                            } catch (NumberFormatException e){
-                                System.out.println("NumberFormatException"+e.getMessage());
+                        if(dataSnapshot != null && dataSnapshot.getChildren()!=null && dataSnapshot.getChildren().iterator().hasNext()){
+                            int i=1;
+                            int godzinaInt=0;
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                String godzOdjazdu = (String)ds.getValue();
+                                String[] podzielonaGodzina = godzOdjazdu.split(":");
+                                String godzina = podzielonaGodzina[0]+podzielonaGodzina[1];
+                                try {
+                                    godzinaInt = Integer.parseInt(godzina);
+                                } catch (NumberFormatException e){
+                                    System.out.println("NumberFormatException"+e.getMessage());
+                                }
+                                timetable.add(godzinaInt);
+                                i++;
                             }
-                            timetable.add(godzinaInt);
-                            i++;
+                            check=1;
+                        } else{
+                            // jesli jest tutaj, to oznacza, ze pobieranego nie ma w bazie danych
+                            System.out.println("Jeden z przystankow nie wystepuje w bazie");
+                            czyIstniejeWBazie[0] = "error";
                         }
-                        check=1;
+
                     }
 
                     @Override
@@ -96,7 +104,7 @@ public class HomeFragment extends Fragment {
                         System.out.println("error");
                     }
                 };
-                if(!przystanekPoczatkowy.equals("error") && !przystanekKoncowy.equals("error") && czasOdjazdu != 999999)
+                if(!przystanekPoczatkowy.equals("error") && !przystanekKoncowy.equals("error") && czasOdjazdu != 999999 && !czyIstniejeWBazie[0].equals("error"))
                 {
                     ref.addListenerForSingleValueEvent(valueEventListener);
                     if(check==0) System.out.println("NIE ZDAZYLO SIE DODAC");

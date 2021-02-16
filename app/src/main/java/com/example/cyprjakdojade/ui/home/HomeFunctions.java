@@ -1,5 +1,9 @@
 package com.example.cyprjakdojade.ui.home;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class HomeFunctions {
@@ -58,4 +62,28 @@ public class HomeFunctions {
         return czasOdjazdu;
     }
 
+    /*static String czyPrzystankiSaWBazie(String p1, String p2){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference ref = database.getReference(przystanekPoczatkowy).child("Dionysios Solomos Square").child(przystanekKoncowy).child("ponToPia");
+        //DatabaseReference przystanek1ref = database.getReference()
+        database.getReference(p1).equalTo(p1).addValueEventListener(new ValueEventListener() {
+        //ref.child("app").child("user").child("uid").orderByChild("username").equalTo(username).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null && dataSnapshot.getChildren()!=null &&
+                        dataSnapshot.getChildren().iterator().hasNext()){
+                    //Username exists
+                }else {
+                    //Username does not exist
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                //Error
+            }
+        });
+        return p1;
+    }
+    */
 }

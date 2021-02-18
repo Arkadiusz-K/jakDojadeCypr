@@ -52,15 +52,21 @@ public class GalleryFragment extends Fragment {
             public void onClick(View v) {
                 String przystanekPoczatkowy = trasaPrzystanekPoczatkowy.getText().toString();
                 String przystanekKoncowy = trasaPrzystanekKoncowy.getText().toString();
+                // tutaj walidacja przystankow
+                listaPrzystankow.add(przystanekPoczatkowy);
                 DatabaseReference ref = database.getReference("trasa").child(przystanekPoczatkowy);
                 final DatabaseReference[] ref2 = {database.getReference("trasa").child(przystanekPoczatkowy)};
                 ValueEventListener valueEventListener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        System.out.println("jestem w onDataCgange: "+ref.getKey());
-                        System.out.println("@@@@@@@@@@@@@@ ilosc dzieci: "+snapshot.getChildrenCount());
-                        RouteFunctions.search(przystanekKoncowy,snapshot);
+                        RouteFunctions.search(przystanekKoncowy,snapshot,listaPrzystankow);
+                        int i=0;
+                        System.out.println("-------TRASA---------");
+                        for(String s : listaPrzystankow){
+                            System.out.println("nr na trasie: "+i+", nazwa: "+s);
+                            i++;
+                        }
                     }
 
                     @Override
@@ -69,6 +75,8 @@ public class GalleryFragment extends Fragment {
                     }
                 };
                 ref.addListenerForSingleValueEvent(valueEventListener);
+                TextView wynik1 = root.findViewById(R.id.trasaWynik1);
+                wynik1.setText("Tutaj bedzie pierwszy wynik");
             }
             });
 

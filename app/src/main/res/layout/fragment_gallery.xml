@@ -67,6 +67,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTrasa"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrasa">
+
+        <TextView
+            android:id="@+id/trasaWyniki"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Trasa:" />
+
+        <TextView
+            android:id="@+id/trasaWynik1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="40dp" />
+
+        <TextView
+            android:id="@+id/trasaWynik2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="40dp" />
+
+        <TextView
+            android:id="@+id/trasaWynik3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="40dp" />
+
+        <TextView
+            android:id="@+id/trasaWynik4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="40dp" />
+
+        <TextView
+            android:id="@+id/trasaWynik5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="40dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

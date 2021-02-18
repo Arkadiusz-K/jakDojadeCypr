@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.okhttp.Route;
+
+import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
@@ -41,6 +44,8 @@ public class GalleryFragment extends Fragment {
         EditText trasaPrzystanekPoczatkowy = root.findViewById(R.id.trasaPoczatkowy);
         EditText trasaPrzystanekKoncowy = root.findViewById(R.id.trasaKoncowy);
         Button button = (Button)root.findViewById(R.id.buttonTrasa);
+        String wynik1;
+        ArrayList<String> listaPrzystankow = new ArrayList<String>();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -48,12 +53,28 @@ public class GalleryFragment extends Fragment {
                 String przystanekPoczatkowy = trasaPrzystanekPoczatkowy.getText().toString();
                 String przystanekKoncowy = trasaPrzystanekKoncowy.getText().toString();
                 DatabaseReference ref = database.getReference("trasa").child(przystanekPoczatkowy);
+                final DatabaseReference[] ref2 = {database.getReference("trasa").child(przystanekPoczatkowy)};
                 ValueEventListener valueEventListener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         System.out.println("jestem w onDataCgange: "+ref.getKey());
                         System.out.println("@@@@@@@@@@@@@@ ilosc dzieci: "+snapshot.getChildrenCount());
+                        for(DataSnapshot ds : snapshot.getChildren()){
+                            //if(ds.getValue().toString().equals(przystanekKoncowy)){
+                            if(ds.getValue().toString().equals("4")){
+                                System.out.println("odp: poczatkowy: "+przystanekPoczatkowy+" , koncowy: "+przystanekKoncowy);
+                            } else{
+                                String klucz = ds.getKey();
+                                System.out.println("KLUCZ KLUCZ KLUCZ ----> "+klucz);
+                                assert klucz != null;
+                                ref2[0] = ref2[0].child(klucz);
+                                RouteFunctions.search(ref2[0],przystanekKoncowy,snapshot);
+                            }
+                            System.out.println("1. ds: "+ds);
+                            System.out.println("2. ds.getValue: "+ds.getValue());
+                            System.out.println("3. koncowy: "+przystanekKoncowy);
+                        }
                     }
 
                     @Override

@@ -60,21 +60,7 @@ public class GalleryFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         System.out.println("jestem w onDataCgange: "+ref.getKey());
                         System.out.println("@@@@@@@@@@@@@@ ilosc dzieci: "+snapshot.getChildrenCount());
-                        for(DataSnapshot ds : snapshot.getChildren()){
-                            //if(ds.getValue().toString().equals(przystanekKoncowy)){
-                            if(ds.getValue().toString().equals("4")){
-                                System.out.println("odp: poczatkowy: "+przystanekPoczatkowy+" , koncowy: "+przystanekKoncowy);
-                            } else{
-                                String klucz = ds.getKey();
-                                System.out.println("KLUCZ KLUCZ KLUCZ ----> "+klucz);
-                                assert klucz != null;
-                                ref2[0] = ref2[0].child(klucz);
-                                RouteFunctions.search(ref2[0],przystanekKoncowy,snapshot);
-                            }
-                            System.out.println("1. ds: "+ds);
-                            System.out.println("2. ds.getValue: "+ds.getValue());
-                            System.out.println("3. koncowy: "+przystanekKoncowy);
-                        }
+                        RouteFunctions.search(przystanekKoncowy,snapshot);
                     }
 
                     @Override

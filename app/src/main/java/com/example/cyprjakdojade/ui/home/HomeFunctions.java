@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 public class HomeFunctions {
     public static ArrayList<Integer> najblizszaGodzina(ArrayList<Integer> list, int i){
-        System.out.println("GODZINA I OUTPUT POWINIEN BYC OD NIEJ WIEKSZY: "+i);
-        System.out.println("PIERWSZA WARTOSC Z LISTY: "+list.get(0));
         if(i<=list.get(0)) {
             System.out.println("i wieksze niz list.get(0)");
             return list;
@@ -18,7 +16,6 @@ public class HomeFunctions {
         int doWpisania = 3;
         for(int j : list){
             if(i<=j && doWpisania>0){
-                System.out.println("i: "+i+" ,na liście:"+j+"j dodane do listy");
                 resultList.add(j);
                 doWpisania--;
             }

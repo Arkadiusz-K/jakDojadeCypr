@@ -1,5 +1,6 @@
 package com.example.cyprjakdojade.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
         time = root.findViewById(R.id.editTextTime);
         Button button = (Button)root.findViewById(R.id.buttonSearch);
         button.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view){
                 // wczytanie danych
@@ -76,10 +78,12 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot != null && dataSnapshot.getChildren()!=null && dataSnapshot.getChildren().iterator().hasNext()){
+                            System.out.println("@@@@@@@@@@@@@@ ilosc dzieci: "+dataSnapshot.getChildrenCount());
                             int i=1;
                             int godzinaInt=0;
                             for(DataSnapshot ds : dataSnapshot.getChildren()){
                                 String godzOdjazdu = (String)ds.getValue();
+                                assert godzOdjazdu != null;
                                 String[] podzielonaGodzina = godzOdjazdu.split(":");
                                 String godzina = podzielonaGodzina[0]+podzielonaGodzina[1];
                                 try {
@@ -113,13 +117,8 @@ public class HomeFragment extends Fragment {
                         if (timetable.size() == 0)
                             System.out.println("Pusta lista????????????????????????");
                         i = 0;
-                        System.out.println("GODZINA INT: " + czasOdjazdu);
                         timetable = HomeFunctions.najblizszaGodzina(timetable, czasOdjazdu);
                         System.out.println("---------------------------------------------------");
-                        /*for (int time : timetable) {
-                            System.out.println("nr: " + i + " ,po powrocie z funkcji: " + time);
-                            i++;
-                        }*/
                         for(int j=0;j<3;j++){
                             System.out.println("Z tablicy!!!!!!! :" + timetable.get(j));
                         }

@@ -13,21 +13,28 @@ public class RouteFunctions {
     static ArrayList<String> ominietePrzystanki = new ArrayList<String>();
     // czyZnaleziono - czy znaleziono w bazie pierwszy pierwszy przystanek
     static boolean czyZnaleziono = false;
+    static boolean czyZnalezionoSearch = false;
 
     static void search(String szukany, DataSnapshot snapshot, ArrayList<String> przystanki) {
         System.out.println("----------- poczatek search ----------");
         System.out.println("snaphot -> " + snapshot.getValue()); // logi dla informacji
+
         for (DataSnapshot ds : snapshot.getChildren()) {
+            czyZnalezionoSearch = false;
             System.out.println("snapshot: " + ds); // logi dla informacji
             przystankiPomocnicza.add(ds.getKey()); // dodawaj kolejne przystanki na trasie
             if (ds.getValue().toString().equals(szukany) || ds.getKey().equals(szukany)) {
                 // jesli znaleziono to dodaj dotychczasowa trase do wyniku
                 System.out.println("$$$$$$$$$$$$$$$$$$$$$ odp koncowy: " + szukany);
                 przystanki.addAll(przystankiPomocnicza);
+                czyZnalezionoSearch = true;
             } else {
                 // przeszukuj dalej rekurencyjnie
                search(szukany,ds,przystanki);
             }
+            if(!czyZnalezionoSearch) przystankiPomocnicza.clear();
+            else break;
+
         }
         System.out.println("-----------koniec search -------------");
     }
@@ -65,5 +72,13 @@ public class RouteFunctions {
         // czyszczenie ArrayList, żeby nie przechowywać starych wyników
         przystankiPomocnicza.clear();
         ominietePrzystanki.clear();
+    }
+
+    public static String walidacja(String przystanek){
+        if(przystanek.equals("")) {
+            System.out.println("NIE PODANO PRZYSTANKU POCZĄTKOWEGO");
+            return "error";
+        }
+        return przystanek.toLowerCase();
     }
 }

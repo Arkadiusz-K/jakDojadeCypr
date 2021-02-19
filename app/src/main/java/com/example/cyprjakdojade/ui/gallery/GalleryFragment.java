@@ -45,7 +45,6 @@ public class GalleryFragment extends Fragment {
         EditText trasaPrzystanekKoncowy = root.findViewById(R.id.trasaKoncowy);
         Button button = (Button)root.findViewById(R.id.buttonTrasa);
         // do wyswietlania w aplikacji
-        String wynik1;
         ArrayList<String> listaPrzystankow = new ArrayList<String>(); // lista przystankow na trasie
         ArrayList<String> ominietePrzystanki = new ArrayList<String>(); // nie zawsze uzytkownik wyszukuje od pierwszego przystanku, wiec czesc trzeba pominac
         final FirebaseDatabase database = FirebaseDatabase.getInstance(); // do pobierania z bazy danych Firebase
@@ -54,27 +53,39 @@ public class GalleryFragment extends Fragment {
             public void onClick(View v) {
                 String przystanekPoczatkowy = trasaPrzystanekPoczatkowy.getText().toString();
                 String przystanekKoncowy = trasaPrzystanekKoncowy.getText().toString();
-                // tutaj walidacja przystankow
-                DatabaseReference ref = database.getReference("trasa");
+                // walidacja poprawnosci wprowadzonych przystankow
+                RouteFunctions.walidacja(przystanekPoczatkowy);
+                RouteFunctions.walidacja(przystanekKoncowy);
+
+                final DatabaseReference[] ref = {database.getReference("trasa")}; //pobranie referencji do bazy danych
 
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        listaPrzystankow.clear(); // czyszczenie starego wyniku po nowym kliknieciu
-                        ominietePrzystanki.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+
                         RouteFunctions.clearArrays(); // czyszczenie starych wynikow w RouteFunctions
                         if (snapshot.child(przystanekPoczatkowy).exists() ) { // sprawdzamy czy przystanek poczatkowy jest jako pierwszy na trasie
+                            listaPrzystankow.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+                            ominietePrzystanki.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+                            ref[0] = database.getReference("trasa").child(przystanekPoczatkowy);
                             System.out.println("exist: "+snapshot.child(przystanekPoczatkowy));
                             RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow); //znajdz trase dla przystanku koncowego
+                            if(listaPrzystankow.size()>=1){
+                                listaPrzystankow.add(0, przystanekPoczatkowy);
+                            }
+                            if(listaPrzystankow.get(0).equals(listaPrzystankow.get(1))){
+                                listaPrzystankow.remove(1);
+                            }
                             int i = 0;
                             System.out.println("-------TRASA---------");
                             for (String s : listaPrzystankow) {
                                 System.out.println("nr na trasie: " + i + ", nazwa: " + s);
                                 i++;
                             }
+                            RouteFunctions.clearArrays();
                         } else {
                             // jesli przystanku początkowego nie ma na poczatku trasy
-                            boolean czyZnaleziono = RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot,ref,ominietePrzystanki);
+                            boolean czyZnaleziono = RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot, ref[0],ominietePrzystanki);
                             if(czyZnaleziono) {
                                 RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
                                 listaPrzystankow.removeAll(ominietePrzystanki);
@@ -98,9 +109,25 @@ public class GalleryFragment extends Fragment {
                         System.out.println("warning, onCancelled");
                     }
                 };
-                ref.addListenerForSingleValueEvent(valueEventListener);
+                ref[0].addListenerForSingleValueEvent(valueEventListener);
+
+                int ileWynikow = listaPrzystankow.size();
+                System.out.println("Ilosc wynikow: "+ileWynikow);
+                for(int i = ileWynikow; i<5;i++){
+                    listaPrzystankow.add(i,"");
+                }
                 TextView wynik1 = root.findViewById(R.id.trasaWynik1);
-                wynik1.setText("Tutaj bedzie pierwszy wynik");
+                wynik1.setText(listaPrzystankow.get(0));
+                TextView wynik2 = root.findViewById(R.id.trasaWynik2);
+                wynik2.setText(listaPrzystankow.get(1));
+                TextView wynik3 = root.findViewById(R.id.trasaWynik3);
+                wynik3.setText(listaPrzystankow.get(2));
+                TextView wynik4 = root.findViewById(R.id.trasaWynik4);
+                wynik4.setText(listaPrzystankow.get(3));
+                TextView wynik5 = root.findViewById(R.id.trasaWynik5);
+                wynik5.setText(listaPrzystankow.get(4));
+                listaPrzystankow.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+                ominietePrzystanki.clear(); // czyszczenie starego wyniku po nowym kliknieciu
             }
             });
 

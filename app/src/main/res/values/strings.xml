@@ -21,4 +21,7 @@
     <string name="name2">Przystanek końcowy</string>
     <string name="to">To</string>
     <string name="dostepne_polaczenia">Dostępne połączenia</string>
+    <string name="przystanek1">przystanek początkowy</string>
+    <string name="przystanek2">przystanek końcowy</string>
+    <string name="godzina">godzina</string>
 </resources>

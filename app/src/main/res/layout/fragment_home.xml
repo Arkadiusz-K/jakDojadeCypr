@@ -22,27 +22,31 @@
         <TextView
             android:id="@+id/wyniki"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/wynik1"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/wynik2"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/wynik3"
             android:layout_width="match_parent"
-            android:layout_height="58dp" />
+            android:layout_height="58dp"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/text_home"
-        android:layout_width="match_parent"
+        android:layout_width="402dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
@@ -59,15 +63,15 @@
 
     <EditText
         android:id="@+id/EditTextSearch"
-        android:layout_width="406dp"
+        android:layout_width="402dp"
         android:layout_height="44dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="82dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/przystanek1"
         android:inputType="textPersonName"
-        android:text="@string/name"
         app:layout_constraintEnd_toEndOf="@+id/editTextTime"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="@+id/text_home"
@@ -93,7 +97,7 @@
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/name2"
+        android:hint="@string/przystanek2"
         app:layout_constraintBottom_toTopOf="@+id/editTextTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -102,14 +106,14 @@
 
     <EditText
         android:id="@+id/editTextTime"
-        android:layout_width="413dp"
+        android:layout_width="402dp"
         android:layout_height="0dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="132dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/godzina"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 

@@ -31,7 +31,7 @@
             android:height="50dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="przystanek początkowy" />
+            android:hint="@string/przystanek1" />
 
         <EditText
             android:id="@+id/trasaKoncowy"
@@ -40,7 +40,7 @@
             android:height="50dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="przystanek końcowy" />
+            android:hint="@string/przystanek2" />
 
     </LinearLayout>
 
@@ -73,37 +73,43 @@
             android:id="@+id/trasaWyniki"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Trasa:" />
+            android:text="Trasa:"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/trasaWynik1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="40dp" />
+            android:height="40dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/trasaWynik2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="40dp" />
+            android:height="40dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/trasaWynik3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="40dp" />
+            android:height="40dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/trasaWynik4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="40dp" />
+            android:height="40dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/trasaWynik5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="40dp" />
+            android:height="40dp"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

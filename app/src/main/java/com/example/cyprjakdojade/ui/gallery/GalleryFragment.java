@@ -116,6 +116,7 @@ public class GalleryFragment extends Fragment {
                 for(int i = ileWynikow; i<5;i++){
                     listaPrzystankow.add(i,"");
                 }
+
                 TextView wynik1 = root.findViewById(R.id.trasaWynik1);
                 wynik1.setText(listaPrzystankow.get(0));
                 TextView wynik2 = root.findViewById(R.id.trasaWynik2);

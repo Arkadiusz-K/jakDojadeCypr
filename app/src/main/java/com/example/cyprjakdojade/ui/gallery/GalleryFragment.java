@@ -46,6 +46,7 @@ public class GalleryFragment extends Fragment {
         Button button = (Button)root.findViewById(R.id.buttonTrasa);
         String wynik1;
         ArrayList<String> listaPrzystankow = new ArrayList<String>();
+        ArrayList<String> referencjeDoPierwszegoPrzystanku = new ArrayList<String>();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -53,19 +54,27 @@ public class GalleryFragment extends Fragment {
                 String przystanekPoczatkowy = trasaPrzystanekPoczatkowy.getText().toString();
                 String przystanekKoncowy = trasaPrzystanekKoncowy.getText().toString();
                 // tutaj walidacja przystankow
-                listaPrzystankow.add(przystanekPoczatkowy);
-                DatabaseReference ref = database.getReference("trasa").child(przystanekPoczatkowy);
-                final DatabaseReference[] ref2 = {database.getReference("trasa").child(przystanekPoczatkowy)};
+                //listaPrzystankow.add(przystanekPoczatkowy);
+
+                //DatabaseReference ref = database.getReference("trasa").child(przystanekPoczatkowy);
+                DatabaseReference ref = database.getReference("trasa");
                 ValueEventListener valueEventListener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        RouteFunctions.search(przystanekKoncowy,snapshot,listaPrzystankow);
-                        int i=0;
-                        System.out.println("-------TRASA---------");
-                        for(String s : listaPrzystankow){
-                            System.out.println("nr na trasie: "+i+", nazwa: "+s);
-                            i++;
+                        if (snapshot.child(przystanekPoczatkowy).exists() && snapshot.getChildren().iterator().hasNext()) {
+                            RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
+                            int i = 0;
+                            System.out.println("-------TRASA---------");
+                            for (String s : listaPrzystankow) {
+                                System.out.println("nr na trasie: " + i + ", nazwa: " + s);
+                                i++;
+                            }
+                        } else {
+                            System.out.println("Przystanku początkowego nie ma w bazie na pierwszym stopniu!");
+                            DatabaseReference ref = database.getReference("trasa");
+                            RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot,ref,referencjeDoPierwszegoPrzystanku);
+                            RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
                         }
                     }
 

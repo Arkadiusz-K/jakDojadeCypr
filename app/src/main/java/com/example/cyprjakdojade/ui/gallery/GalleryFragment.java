@@ -44,27 +44,28 @@ public class GalleryFragment extends Fragment {
         EditText trasaPrzystanekPoczatkowy = root.findViewById(R.id.trasaPoczatkowy);
         EditText trasaPrzystanekKoncowy = root.findViewById(R.id.trasaKoncowy);
         Button button = (Button)root.findViewById(R.id.buttonTrasa);
+        // do wyswietlania w aplikacji
         String wynik1;
-        ArrayList<String> listaPrzystankow = new ArrayList<String>();
-        ArrayList<String> ominietePrzystanki = new ArrayList<String>();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        ArrayList<String> listaPrzystankow = new ArrayList<String>(); // lista przystankow na trasie
+        ArrayList<String> ominietePrzystanki = new ArrayList<String>(); // nie zawsze uzytkownik wyszukuje od pierwszego przystanku, wiec czesc trzeba pominac
+        final FirebaseDatabase database = FirebaseDatabase.getInstance(); // do pobierania z bazy danych Firebase
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 String przystanekPoczatkowy = trasaPrzystanekPoczatkowy.getText().toString();
                 String przystanekKoncowy = trasaPrzystanekKoncowy.getText().toString();
                 // tutaj walidacja przystankow
-                //listaPrzystankow.add(przystanekPoczatkowy);
-
-                //DatabaseReference ref = database.getReference("trasa").child(przystanekPoczatkowy);
                 DatabaseReference ref = database.getReference("trasa");
-                ValueEventListener valueEventListener = new ValueEventListener() {
 
+                ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.child(przystanekPoczatkowy).exists() && snapshot.getChildren().iterator().hasNext()) {
+                        listaPrzystankow.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+                        ominietePrzystanki.clear(); // czyszczenie starego wyniku po nowym kliknieciu
+                        RouteFunctions.clearArrays(); // czyszczenie starych wynikow w RouteFunctions
+                        if (snapshot.child(przystanekPoczatkowy).exists() ) { // sprawdzamy czy przystanek poczatkowy jest jako pierwszy na trasie
                             System.out.println("exist: "+snapshot.child(przystanekPoczatkowy));
-                            RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
+                            RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow); //znajdz trase dla przystanku koncowego
                             int i = 0;
                             System.out.println("-------TRASA---------");
                             for (String s : listaPrzystankow) {
@@ -72,30 +73,29 @@ public class GalleryFragment extends Fragment {
                                 i++;
                             }
                         } else {
-                            System.out.println("Przystanku początkowego nie ma w bazie na pierwszym stopniu!");
-                            DatabaseReference ref = database.getReference("trasa");
+                            // jesli przystanku początkowego nie ma na poczatku trasy
                             boolean czyZnaleziono = RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot,ref,ominietePrzystanki);
                             if(czyZnaleziono) {
-                                System.out.println("999999999999 czy znaleziono? : " + czyZnaleziono);
                                 RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
                                 listaPrzystankow.removeAll(ominietePrzystanki);
 
                                 if (listaPrzystankow.size() >= 1) {
-                                    listaPrzystankow.add(0, przystanekPoczatkowy);
+                                    listaPrzystankow.add(0, przystanekPoczatkowy); // removeAll usunelo rowniez przystanek poczatkowy
+                                    // trzeba go dodac tylko jesli w ArrayList sa inne przystanki (gdyz to swiadczy o poprawnosci trasy)
                                     for (String s : listaPrzystankow) {
                                         System.out.println("Wynik: " + s);
                                     }
+                                    RouteFunctions.clearArrays();
                                 }
                             } else{
                                 System.out.println("error, this bus stop don't exist");
                             }
-
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        System.out.println("warning, onCancelled");
                     }
                 };
                 ref.addListenerForSingleValueEvent(valueEventListener);

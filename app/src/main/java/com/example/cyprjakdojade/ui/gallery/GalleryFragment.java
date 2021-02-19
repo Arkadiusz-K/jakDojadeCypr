@@ -46,7 +46,7 @@ public class GalleryFragment extends Fragment {
         Button button = (Button)root.findViewById(R.id.buttonTrasa);
         String wynik1;
         ArrayList<String> listaPrzystankow = new ArrayList<String>();
-        ArrayList<String> referencjeDoPierwszegoPrzystanku = new ArrayList<String>();
+        ArrayList<String> ominietePrzystanki = new ArrayList<String>();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,6 +63,7 @@ public class GalleryFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.child(przystanekPoczatkowy).exists() && snapshot.getChildren().iterator().hasNext()) {
+                            System.out.println("exist: "+snapshot.child(przystanekPoczatkowy));
                             RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
                             int i = 0;
                             System.out.println("-------TRASA---------");
@@ -73,8 +74,22 @@ public class GalleryFragment extends Fragment {
                         } else {
                             System.out.println("Przystanku początkowego nie ma w bazie na pierwszym stopniu!");
                             DatabaseReference ref = database.getReference("trasa");
-                            RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot,ref,referencjeDoPierwszegoPrzystanku);
-                            RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
+                            boolean czyZnaleziono = RouteFunctions.searchFirst(przystanekPoczatkowy,snapshot,ref,ominietePrzystanki);
+                            if(czyZnaleziono) {
+                                System.out.println("999999999999 czy znaleziono? : " + czyZnaleziono);
+                                RouteFunctions.search(przystanekKoncowy, snapshot, listaPrzystankow);
+                                listaPrzystankow.removeAll(ominietePrzystanki);
+
+                                if (listaPrzystankow.size() >= 1) {
+                                    listaPrzystankow.add(0, przystanekPoczatkowy);
+                                    for (String s : listaPrzystankow) {
+                                        System.out.println("Wynik: " + s);
+                                    }
+                                }
+                            } else{
+                                System.out.println("error, this bus stop don't exist");
+                            }
+
                         }
                     }
 

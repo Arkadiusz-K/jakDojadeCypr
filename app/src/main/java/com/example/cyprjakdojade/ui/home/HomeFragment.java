@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 
@@ -54,6 +56,21 @@ public class HomeFragment extends Fragment {
         tv = root.findViewById(R.id.EditTextSearch);
         tv2 = root.findViewById(R.id.EditTextSearch2);
         time = root.findViewById(R.id.editTextTime);
+        Button button2 = (Button)root.findViewById(R.id.buttonCurrentTime);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+
+                System.out.println("AKKKKKKKKKKKKKTUALNY CZAS:::::::::"+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
+                String czas = cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE);
+                System.out.println("CZAAAAAAAAAAAAAAAAAAAAAAAAAA"+czas);
+                time.setText(czas);
+            }
+        });
+
+
+
         Button button = (Button)root.findViewById(R.id.buttonSearch);
         button.setOnClickListener(new View.OnClickListener(){
             @SuppressLint("SetTextI18n")
@@ -69,6 +86,8 @@ public class HomeFragment extends Fragment {
                 przystanekPoczatkowy = HomeFunctions.walidacja(przystanekPoczatkowy);
                 przystanekKoncowy = HomeFunctions.walidacja(przystanekKoncowy);
                 czasOdjazdu = HomeFunctions.czasWalidacja(czas);
+
+
 
 
                 // tutaj bedzie szukanie najblizszego polaczenia i kolejnych po nim

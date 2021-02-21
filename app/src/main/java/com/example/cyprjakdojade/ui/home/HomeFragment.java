@@ -36,6 +36,7 @@ public class HomeFragment extends Fragment {
     EditText tv2;
     EditText time;
     ArrayList<Integer> timetable = new ArrayList<>();
+    ArrayList<String> nrLinii = new ArrayList<>();
     int check = 0;
     int godzinaInt, czasOdjazdu;
 
@@ -103,6 +104,8 @@ public class HomeFragment extends Fragment {
                             for(DataSnapshot ds : dataSnapshot.getChildren()){
                                 String godzOdjazdu = (String)ds.getValue();
                                 assert godzOdjazdu != null;
+                                String linia = ds.getKey().substring(2);
+                                nrLinii.add(linia);
                                 String[] podzielonaGodzina = godzOdjazdu.split(":");
                                 String godzina = podzielonaGodzina[0]+podzielonaGodzina[1];
                                 try {
@@ -143,9 +146,9 @@ public class HomeFragment extends Fragment {
                         }
                         TextView wyniki = root.findViewById(R.id.wyniki);
                         wyniki.setText("WYNIKI");
-                        String godz1 = HomeFunctions.edytujDoWyswietlenia(timetable.get(0));
-                        String godz2 = HomeFunctions.edytujDoWyswietlenia(timetable.get(1));
-                        String godz3 = HomeFunctions.edytujDoWyswietlenia(timetable.get(2));
+                        String godz1 = HomeFunctions.edytujDoWyswietlenia(timetable.get(0))+",     nr linii:"+nrLinii.get(0);
+                        String godz2 = HomeFunctions.edytujDoWyswietlenia(timetable.get(1))+",     nr linii:"+nrLinii.get(0);
+                        String godz3 = HomeFunctions.edytujDoWyswietlenia(timetable.get(2))+",     nr linii:"+nrLinii.get(0);
                         TextView wynik1 = root.findViewById(R.id.wynik1);
                         wynik1.setText(godz1);
                         TextView wynik2 = root.findViewById(R.id.wynik2);
